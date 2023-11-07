@@ -15,7 +15,6 @@ const handleShowPassword = () => {
 
 const handleSubmit = () => {
     
-    // console.log({email: email.value, password: password.value})
     authStore.loginUser(email.value, password.value)
 }
 
@@ -43,7 +42,9 @@ const handleSubmit = () => {
             </div>
         </div>
 
-        <button type="submit" class="btn-primary">Iniciar Sesion</button>
+        <button type="submit" class="btn-primary" :aria-disabled="authStore.isLoading">
+            {{ authStore.isLoading ? "Cargando..." : "Iniciar Sesion" }}
+        </button>
 
     </form>
 </template>

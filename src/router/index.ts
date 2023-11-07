@@ -1,14 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import AuthLayout from '@/layouts/auth/AuthLayout.vue'
+import RooLayout from '@/layouts/root/RooLayout.vue'
+import authService from '@/services/authService'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'root',
+      component: () => RooLayout,
+      redirect: 'profile',
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: 'profile',
+          name: 'profile',
+          component: () => import('@/views/profile/ProfileView.vue')
+        }
+      ]
     },
     {
       path: '/auth',
@@ -23,6 +33,28 @@ const router = createRouter({
       ]
     }
   ]
+})
+
+
+router.beforeEach(async (to, form, next) => {
+
+  const requiresAuth = to.matched.some(url => url.meta.requiresAuth);
+
+  if( requiresAuth ){
+    const token = localStorage.getItem('AUTH_TOKEN_INVENTORY');
+   
+    // VALIDAR EL TOKEN
+    const user = await authService.validate(token!);
+    
+    if( !token || !user ){
+      next({ path: '/auth/login' })
+      return;
+    }
+
+    next();
+  }
+  
+  next();
 })
 
 export default router

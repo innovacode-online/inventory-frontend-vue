@@ -1,6 +1,6 @@
 import inventoryDb from "@/api/inventoryDb";
 import { handleAxiosError } from "@/helpers/handle-axios-error";
-import type { ILoginResponse } from "@/interface";
+import type { ILoginResponse, IUser } from "@/interface";
 
 
 
@@ -14,7 +14,21 @@ async function login(email:string, password:string) {
     }
 }
 
+async function validate(token:string) {
+    try {
+        const { data } = await inventoryDb.get<IUser>('/auth/user',{
+            headers: {
+                Authorization: 'Bearer ' + token,
+                Accept: 'application/json'
+            }
+        })
+        return data;
+    } catch (error) {
+        handleAxiosError(error);
+    }   
+}
 
 export default {
-    login
+    login,
+    validate
 }
