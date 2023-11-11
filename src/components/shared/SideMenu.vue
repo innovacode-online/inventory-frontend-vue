@@ -15,6 +15,13 @@ const authStore = useAuthStore();
                     Perfil
                 </RouterLink>
             </li>
+
+            <li>
+                <RouterLink :to="{name: 'categories'}" class="nav__menu--item">
+                    <i class="uil uil-layer-group"></i>
+                    Categorias
+                </RouterLink>
+            </li>
         </ul>
     
     
