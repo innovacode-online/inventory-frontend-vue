@@ -1,12 +1,12 @@
 import { onMounted, ref } from "vue";
 import { defineStore } from "pinia";
+import router from "@/router";
 
 import axios from "axios";
 
 import { useToastStore } from "./toast";
 import categoryService from "@/services/categoryService";
 import type { ICategoriesResponse } from "@/interface";
-import router from "@/router";
 
 
 
@@ -32,7 +32,33 @@ export const useCategoryStore = defineStore('category', () => {
     }
 
     
+    async function getCategoryByTerm(term:string) {
+        isLoading.value = true;
 
+        try {
+            const category = await categoryService.findOne(term);
+            isLoading.value = false;
+            return category;
+        } catch (error) {
+            handleError(error);
+            router.push('/categories')
+        } finally {
+            isLoading.value = false;
+        }
+
+    }
+
+    async function updateCategoryById(id:number, name:string) {
+        try {
+            const message = await categoryService.update(id, name);
+            toastStore.showToast('success', message);
+            getAllCategories();
+            router.push({ name: 'categories' })
+        
+        } catch (error) {
+            handleError(error);
+        } 
+    }
 
     async function createNewCategory(name:string) {
         isLoading.value = true;
@@ -90,6 +116,8 @@ export const useCategoryStore = defineStore('category', () => {
 
         // METHODS
         deleteCategory,
-        createNewCategory
+        createNewCategory,
+        getCategoryByTerm,
+        updateCategoryById
     }
 })

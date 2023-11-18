@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { ICategoriesResponse } from '../../interface';
 import { useCategoryStore } from '../../stores/category';
+import { formatDate } from '../../helpers/format-date';
 
 const categoryStore = useCategoryStore();
 
@@ -13,11 +14,11 @@ defineProps<{
 <template>
     <div class="category__card">
         <h3>Nombre: {{ category.name }}</h3>
-        <p>Creacion: {{ category.created_at }}</p>
+        <p>Creacion: {{ formatDate(category.created_at) }}</p>
 
         <div class="flex gap-4 items-center mt-4">
             <button @click="categoryStore.deleteCategory(`${category.id}`)" class="btn-delete">Eliminar</button>
-            <button class="btn-primary">Editar</button>
+            <RouterLink :to="{ path: `/categories/edit/${ category.slug }` }"  class="btn-primary text-center">Editar</RouterLink>
         </div>
 
     </div>
