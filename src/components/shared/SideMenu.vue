@@ -22,6 +22,13 @@ const authStore = useAuthStore();
                     Categorias
                 </RouterLink>
             </li>
+
+            <li>
+                <RouterLink :to="{name: 'products'}" class="nav__menu--item" active-class="nav__link--active">
+                    <i class="uil uil-shopping-cart-alt"></i>
+                    Productos
+                </RouterLink>
+            </li>
         </ul>
     
     

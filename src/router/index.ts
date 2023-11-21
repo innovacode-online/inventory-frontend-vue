@@ -32,6 +32,16 @@ const router = createRouter({
           path: 'categories/edit/:slug',
           name: 'edit-category',
           component: () => import('@/views/categories/EditCategoryView.vue')
+        },
+        {
+          path: 'products',
+          name: 'products',
+          component: () => import('@/views/products/ProductsView.vue')
+        },
+        {
+          path: 'products/new',
+          name: 'new-product',
+          component: () => import('@/views/products/NewProductView.vue')
         }
       ]
     },
