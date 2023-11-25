@@ -1,12 +1,15 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
-import { useCategoryStore } from '../../stores/category';
+
 import { useToastStore } from '../../stores/toast';
+import { useProductStore } from '../../stores/product';
+import { useCategoryStore } from '../../stores/category';
 
 const categoryStore = useCategoryStore();
 const toastStore = useToastStore();
+const productStore = useProductStore();
 
-
+const image = ref();
 const preImage = ref('');
 
 const product = reactive({
@@ -19,20 +22,28 @@ const product = reactive({
 
 const handleFile = (e: any) => {
     const file = e.target.files[0];
-
+    image.value = file;
     preImage.value = URL.createObjectURL(file);
 }
 
 const handleSubmit = () => {
-    if (product.name.trim() === '')
+    if (product.name.trim() === ''){
         toastStore.showToast('error', 'Ingresa un nombre valido');
+        return;
+    }
 
-    if (product.stock <= 0)
+    if (product.stock <= 0){
         toastStore.showToast('error', 'Ingresa un stock valido');
+        return;
+    }
 
-
-    if (product.price <= 0)
+    if (product.price <= 0){
         toastStore.showToast('error', 'Ingresa un precio valido');
+        return;
+    }
+
+    productStore.createNewProduct(image.value, product);
+
 }
 
 
@@ -42,7 +53,7 @@ const handleSubmit = () => {
     <form @submit.prevent="handleSubmit" class="product__form">
         <div class="text-center max-w-[560px] w-full">
             <h3>Seleccione una imagen</h3>
-            <input type="file" accept=".jpg, .png" @change="handleFile">
+            <input type="file" accept=".jpg, .png, .webp" @change="handleFile">
             <p v-show="preImage === ''">No hay imagen</p>
             <img :src="preImage">
         </div>
