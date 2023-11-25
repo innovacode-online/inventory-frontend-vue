@@ -4,6 +4,7 @@ import { useToastStore } from "./toast";
 import { onMounted, ref } from "vue";
 import type { IUser } from "@/interface";
 import router from "@/router";
+import { handleAxiosError } from "@/helpers/handle-axios-error";
 
 
 export const useAuthStore = defineStore('auth', () => {
@@ -33,10 +34,22 @@ export const useAuthStore = defineStore('auth', () => {
         toastStore.showToast('success', "Inicio de sesion correcto");
         router.push('/profile');
         isLoading.value = false;
-
+        console.log(user.value);
 
     }
     
+    async function logout() {
+        try {
+            const token = localStorage.getItem('AUTH_TOKEN_INVENTORY');
+            console.log(token);
+            await authService.logout(token!);
+            localStorage.removeItem('AUTH_TOKEN_INVENTORY');
+            router.push('/auth/login')
+        } catch (error) {
+            handleAxiosError(error);
+        }
+    }
+
 
     async function validateToken() {
         isLoading.value = true;
@@ -67,6 +80,7 @@ export const useAuthStore = defineStore('auth', () => {
     return {
         user,
         token,
+        logout,
         isLoading,
         loginUser,
     }
