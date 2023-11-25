@@ -18,7 +18,7 @@ const handleSubmit = () => {
     <form @submit.prevent="handleSubmit" class="bg-white p-5 rounded-md shadow-md max-w-md mx-auto mt-10">
         <div class="form-control">
             <label for="name">Nombre: </label>
-            <input v-model="name" type="text" id="name" name="category-name">
+            <input value="name" type="text" id="name" name="category-name">
         </div>
 
         <button class="btn-primary">

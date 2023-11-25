@@ -15,7 +15,7 @@ const { handleSubmit, isLoading } = useEditCategory();
     <form @submit.prevent="handleSubmit(props.category)" class="bg-white p-5 rounded-md shadow-md max-w-md mx-auto mt-10">
         <div class="form-control">
             <label for="name">Nombre: </label>
-            <input v-model="props.category.name" type="text" id="name" name="category-name">
+            <input value="props.category.name" type="text" id="name" name="category-name">
         </div>
 
         <button class="btn-primary">

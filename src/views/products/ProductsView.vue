@@ -20,7 +20,7 @@ console.log(products)
     />
 
     <!-- LISTADO DE PRODUCTOS -->
-    <ul>
+    <ul class="space-y-4">
         <li v-for="product in products" :key="product.id">
             <ProductItem :product="product" /> 
         </li>

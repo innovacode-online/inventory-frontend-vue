@@ -1,5 +1,5 @@
 import inventoryDb from "@/api/inventoryDb"
-import type { IProductCreate, IProductsResponse, IProductsResponseData } from "@/interface";
+import type { IFullProduct, IProduct, IProductCreate, IProductsResponse, IProductsResponseData } from "@/interface";
 
 
 async function find(): Promise<IProductsResponseData[]> {
@@ -12,12 +12,23 @@ async function find(): Promise<IProductsResponseData[]> {
     }
 }
 
-async function findOne(slug: string) {
+async function findOne(slug: string): Promise<IProduct> {
+    try {
+        const { data } = await inventoryDb.get<IFullProduct>(`/products/${slug}`);
+        return data.product;
     
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function remove(id: string) {
-    
+    try {
+        const { data } = await inventoryDb.delete(`/products/${ id }`);
+        return data.message;
+    } catch (error) {
+        throw error
+    }
 }
 
 async function create( image: any, product: IProductCreate ) {

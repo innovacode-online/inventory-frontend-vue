@@ -1,5 +1,6 @@
 // PRODUCTS
 export type { IProductCreate } from './products/product-create';
+export type { IFullProduct, IProduct } from './products/full-product';
 export type { IProductsResponse, IProductsResponseData } from './products/products-response';
 
 
