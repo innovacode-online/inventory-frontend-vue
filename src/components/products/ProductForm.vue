@@ -63,7 +63,7 @@ const handleSubmit = () => {
 
             <div class="form-control">
                 <label for="name">Nombre del producto:</label>
-                <input value="product.name" type="text" name="name" id="name">
+                <input v-model="product.name" type="text" name="name" id="name">
             </div>
 
             <div class="form-control">
