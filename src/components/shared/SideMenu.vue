@@ -28,8 +28,15 @@ const authStore = useAuthStore();
 
             <li>
                 <RouterLink :to="{ name: 'products' }" class="nav__menu--item" active-class="nav__link--active">
-                    <i class="uil uil-shopping-cart-alt"></i>
+                    <i class="uil uil-shopping-bag"></i>
                     Productos
+                </RouterLink>
+            </li>
+
+            <li>
+                <RouterLink :to="{ name: 'sales' }" class="nav__menu--item" active-class="nav__link--active">
+                    <i class="uil uil-shopping-cart-alt"></i>
+                    Ventas
                 </RouterLink>
             </li>
         </ul>

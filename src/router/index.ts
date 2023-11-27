@@ -47,6 +47,16 @@ const router = createRouter({
           path: 'products/:slug',
           name: 'product',
           component: () => import('@/views/products/SimpleProductView.vue')
+        },
+        {
+          path: 'sales',
+          name: 'sales',
+          component: () => import('@/views/sales/SalesView.vue')
+        },
+        {
+          path: 'sales/new',
+          name: 'new-sale',
+          component: () => import('@/views/sales/NewSaleView.vue')
         }
       ]
     },
@@ -70,20 +80,20 @@ router.beforeEach(async (to, form, next) => {
 
   const requiresAuth = to.matched.some(url => url.meta.requiresAuth);
 
-  if( requiresAuth ){
+  if (requiresAuth) {
     const token = localStorage.getItem('AUTH_TOKEN_INVENTORY');
-   
+
     // VALIDAR EL TOKEN
     const user = await authService.validate(token!);
-    
-    if( !token || !user ){
+
+    if (!token || !user) {
       next({ path: '/auth/login' })
       return;
     }
 
     next();
   }
-  
+
   next();
 })
 
